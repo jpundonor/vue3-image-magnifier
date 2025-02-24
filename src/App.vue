@@ -2,9 +2,9 @@
   <div>
     <ImageMagnifier 
       src="https://wallpapers.com/images/featured/japon-4k-qbc6mlnwowjbszld.jpg"
-      zoomLevel="2"
-      zoomWidth="350"
-      zoomHeight="450"
+      :zoomLevel="2"
+      :zoomWidth="350"
+      :zoomHeight="450"
     />
   </div>
 </template>

@@ -7,9 +7,18 @@ The **Vue Image Magnifier** component allows you to add a zoom effect on images 
 
 [![npm](https://img.shields.io/npm/v/vue3-image-magnifier?color=%2300f)](https://www.npmjs.com/package/vue3-image-magnifier)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/vue3-image-magnifier)](https://bundlephobia.com/package/vue3-image-magnifier)
+![NPM Downloads](https://img.shields.io/npm/dw/vue3-image-magnifier)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ![Screenshot Image Magnifier](screenshots/image.png) 
+
+## Features
+
+- **Hover or touch** to activate the zoom effect.
+- **AutoZoom** option to automatically enable zoom on mouse move.
+- **Keyboard support** to toggle zoom with Enter or Space (when `autoZoom` is disabled).
+- **ARIA attributes** (`role="button"`, `tabindex="0"`, `aria-label`) for screen reader compatibility.
+- **Customization** for zoom level, zoom area size, border style, radius, etc.
 
 ## Installation
 
@@ -23,13 +32,13 @@ npm install vue3-image-magnifier
 - [Vue 3](https://vuejs.org/) or higher
 
 ## Usage
-```bash
+```vue
 <template>
   <ImageMagnifier src="https://example.com/image.jpg" :zoomLevel="3" />
 </template>
 
 <script>
-import ImageMagnifier from 'vue-image-magnifier';
+import ImageMagnifier from 'vue3-image-magnifier';
 
 export default {
   components: {
@@ -44,6 +53,7 @@ export default {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `src` | String | Required | URL of the image to magnify. |
+| `alt` | String | `Image to magnify` | The alt text for the image (for accessibility). |
 | `zoomLevel` | Number | `2` | The intensity level for the zoom effect. |
 | `zoomWidth` | Number | `200` | The width (in pixels) of the magnified area. |
 | `zoomHeight` | Number | `200` |	The height (in pixels) of the magnified area. |
@@ -52,25 +62,19 @@ export default {
 | `autoZoom` | Boolean | `true` | If true, the zoom effect is activated on mouse move or touch automatically. |
 
 
-## Events
+## Accessibility
+- The main container uses `role="button"`, `tabindex="0"`, and `aria-label` to be navigable via keyboard.
+- When `autoZoom` is disabled, you can toggle the zoom with Enter or Space.
+- The zoom area (floating div) uses `aria-hidden="true"` so it’s ignored by screen readers.
+- A `.sr-only` label is included to provide extra instructions for screen readers without affecting the visual interface.
 
-The component supports both mouse and touch events:
-
-#### **Mouse Events**
-- `@mousemove`: Activates and updates the zoom when moving the mouse.
-- `@mouseleave`: Hides the zoom area when the mouse leaves the image.
-- `@click`: Toggles the zoom display when `autoZoom` is disabled.
-
-#### **Touch Events**
-- `@touchstart`: Activates the zoom on touch.
-- `@touchmove`: Updates the zoom position during touch.
-- `@touchend`: Hides the zoom when the touch ends.
-
+## Changelog
+See the [CHANGELOG.md](./CHANGELOG.md) for a complete list of changes.
 
 ## Contributing
 
 Contributions are welcome! Feel free to open an issue or a pull request if you have any ideas, questions, or suggestions.
 
 
-# License
+## License
 This project is licensed under the MIT License.
