@@ -1,7 +1,11 @@
 <template>
   <div
     class="magnifier-container"
+    role="button"
+    aria-label="Image magnifier"
+    tabindex="0"
     @click="onClick"
+    @keydown="onkeydown"
     @mousemove="onMouseMove"
     @mouseleave="onMouseLeave"
     @touchstart="onTouchStart"
@@ -12,9 +16,17 @@
       :src="src"
       class="magnifier-image"
       ref="imageRef"
-      alt="Image to magnify"
+      :alt="alt"
     />
-    <div v-if="showZoom" class="zoom-result" :style="zoomStyle"></div>
+    <div
+      v-if="showZoom"
+      class="zoom-result"
+      :style="zoomStyle"
+      aria-hidden="true"
+    ></div>
+    <span class="sr-only">
+      Use the mouse or the keyboard (Enter or Space) to activate the magnifier.
+    </span>
   </div>
 </template>
 
@@ -39,6 +51,10 @@ export default {
     src: {
       type: String,
       required: true,
+    },
+    alt: {
+      type: String,
+      default: "Image to magnify",
     },
     zoomLevel: {
       type: Number,
@@ -78,6 +94,18 @@ export default {
     onClick() {
       if (!this.autoZoom) {
         this.showZoom = !this.showZoom;
+      }
+    },
+
+    /**
+     * Handles the keydown event to activate the zoom area when the Enter or Space key is pressed.
+     *
+     * @param {KeyboardEvent} event - The keydown event.
+     */	
+    onkeydown(event) {
+      if (!this.autoZoom && event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        this.onClick();
       }
     },
 
@@ -208,5 +236,16 @@ export default {
   background-repeat: no-repeat;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
   pointer-events: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 </style>
